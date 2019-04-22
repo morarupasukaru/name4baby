@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
-    <title>name4baby</title>
+    <title>nowname</title>
 
     <style>
       /* TODO color when changing selection */
@@ -25,6 +25,17 @@
     border-color: lightblue;
     background-color: lightblue;
 }
+
+.hidden-xs {
+  display: none;
+}
+
+@media (min-width: 576px) { 
+  .hidden-xs {
+    display: block;
+  }
+ }
+
   </style>
 
   </head>
@@ -33,12 +44,12 @@
         <div class="container">
 
             <!-- disappear after several seconds -->
-            <div class="jumbotron">
-                <h1 class="display-4">name4baby</h1>
-                <p class="lead">An application to help you choose a name to your baby.</p>
+            <div class="jumbotron hidden-xs">
+                <h1 class="display-4 display-xs-2">nowname</h1>
+                <p class="lead">An application to help you choose a name for your baby.</p>
               </div>
   
-            <div class="row mb-3">
+            <div class="row mb-3 mt-3">
                 <div class="col">
                     <form>
                         <div class="form-row">
@@ -52,19 +63,19 @@
                           </div>
                         </div>
                         <div class="form-row">
-                            <div class="col-2">
+                            <div class="col-xs-4">
                                 <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input custom-control-input-female" id="customSwitch1">
                                 <label class="custom-control-label" for="customSwitch1"><i class="fa fa-female" style="color: pink"></i>&nbsp;Female</label>
                               </div>
                             </div>
-                            <div class="col-2">
+                            <div class="col-xs-4">
                                 <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input custom-control-input-male" id="customSwitch2">
                                 <label class="custom-control-label" for="customSwitch2"><i class="fa fa-male" style="color: lightblue"></i>&nbsp;Male</label>
                               </div>
                             </div>
-                            <div class="col-2">
+                            <div class="col-xs-4">
                                 <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" id="customSwitch3">
                                 <label class="custom-control-label" for="customSwitch3"><i class="fa fa-star"></i>&nbsp;Star</label>
@@ -146,7 +157,7 @@
         </div>
       </main>
 
-      <footer class="fixed-bottom">
+      <footer>
           <div class="container">
               <div class="row">
                   <div class="col">
