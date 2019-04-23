@@ -57,7 +57,7 @@
                               <div class="input-group mb-3">
                                   <input type="text" class="form-control" placeholder="Enter firstname" aria-label="Firstname" aria-describedby="button-addon2">
                                   <div class="input-group-append">
-                                    <button class="btn btn-outline-primary" type="submit" id="button-addon2">Search</button>
+                                    <button class="btn btn-outline-primary" type="submit" id="button-addon2"><i class="fa fa-search"></i>&nbsp;Search</button>
                                   </div>
                                 </div>
                           </div>
@@ -140,6 +140,7 @@
 
                                                         <nav aria-label="Page navigation example" class="mt-3">
                                                             <ul class="pagination justify-content-center">
+															<!-- TODO dynamic display previous, next, disabled -->
                                                               <li class="page-item disabled">
                                                                 <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
                                                               </li>
@@ -160,12 +161,16 @@
       <footer>
           <div class="container">
               <div class="row">
-                  <div class="col">
-                      <a href="/fr">fr</a>
-                      <a href="/de">de</a>
-                      <a href="/it">it</a>
-                      <a href="/en">en</a>
+                  <div class="col-auto mr-auto">
+				  <i class="fa fa-language"></i>&nbsp;
+                      <a href="/fr" title="Français">fr</a>
+                      <a href="/de" title="Deutsch">de</a>
+                      <a href="/it" title="Italiano">it</a>
+                      <a href="/en" title="English">en</a>
                       </div>
+                  <div class="col-auto">
+                      <a href="https://github.com/morarupasukaru/nowname"><i class="fa fa-github" aria-hidden="true"></i>&nbsp;Github</a>
+				  </div>
               </div>
           </div>
       </footer>
