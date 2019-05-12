@@ -8,13 +8,16 @@
                         type="text"
                         class="form-control"
                         id="firstname"
+                        [disabled]="workInProgress"
                         name="firstname"
                         [ngModel]="firstname"
                         placeholder="Enter firstname"
                         aria-label="Firstname"
                         aria-describedby="button-addon2">
                       <div class="input-group-append">
-                        <button class="btn btn-outline-primary" type="submit" id="button-addon2"><i class="fa fa-search"></i>&nbsp;Search</button>
+                        <button class="btn btn-outline-primary"
+                          type="submit" id="button-search"
+                          [disabled]="workInProgress"><i class="fa fa-search"></i>&nbsp;Search</button>
                       </div>
                     </div>
               </div>
@@ -22,19 +25,19 @@
             <div class="form-row">
                 <div class="col-xs-4">
                     <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input custom-control-input-female" id="female" name="female" [ngModel]="female">
-                    <label class="custom-control-label" for="female"><i class="fa fa-female" style="color: pink"></i>&nbsp;Female</label>
+                    <input type="checkbox" class="custom-control-input custom-control-input-female" [disabled]="workInProgress" id="female" name="female" [ngModel]="female">
+                    <label class="custom-control-label" for="female"><i class="fa fa-female"></i>&nbsp;Female</label>
                   </div>
                 </div>
                 <div class="col-xs-4">
                     <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input custom-control-input-male" id="male" name="male" [ngModel]="male">
-                    <label class="custom-control-label" for="male"><i class="fa fa-male" style="color: lightblue"></i>&nbsp;Male</label>
+                    <input type="checkbox" class="custom-control-input custom-control-input-male" [disabled]="workInProgress" id="male" name="male" [ngModel]="male">
+                    <label class="custom-control-label" for="male"><i class="fa fa-male"></i>&nbsp;Male</label>
                   </div>
                 </div>
                 <div class="col-xs-4">
                     <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="like" name="like" [ngModel]="like">
+                    <input type="checkbox" class="custom-control-input" [disabled]="workInProgress" id="like" name="like" [ngModel]="like">
                     <label class="custom-control-label" for="like"><i class="fa fa-star"></i>&nbsp;Star</label>
                   </div>
                 </div>

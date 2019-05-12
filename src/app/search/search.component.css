@@ -1,13 +1,29 @@
-  /* TODO color when changing selection */
-  .custom-control-input-female:checked~.custom-control-label::before {
-    color: #fff;
-    border-color: pink;
-    background-color: pink;
+.custom-control-input-female:checked ~ .custom-control-label::before {
+  color: #fff;
+  border-color: pink;
+  background-color: pink;
+}
+.custom-control-input-female ~ .custom-control-label {
+  color: pink;
 }
 
-.custom-control-input-male:checked~.custom-control-label::before {
-      /* TODO color when changing selection */
-      color: #fff;
-    border-color: lightblue;
-    background-color: lightblue;
+.custom-control-input-female:disabled ~ .custom-control-label::before {
+  background-color: #e9ecef;
+  border: #adb5bd solid 1px;
 }
+
+.custom-control-input-male:checked ~ .custom-control-label::before {
+  color: #fff;
+  border-color: lightblue;
+  background-color: lightblue;
+}
+.custom-control-input-male ~ .custom-control-label {
+  color: lightblue;
+}
+
+.custom-control-input-male:disabled ~ .custom-control-label::before {
+  background-color: #e9ecef;
+  border: #adb5bd solid 1px;
+}
+
+

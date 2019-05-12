@@ -13,6 +13,7 @@ import { FooterComponent } from './footer/footer.component';
 import { FooterLanguagesComponent } from './footer-languages/footer-languages.component';
 import { FooterInfoComponent } from './footer-info/footer-info.component';
 import { ResultLoadingComponent } from './result-loading/result-loading.component';
+import { FirstnamesService } from './firstnames.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { ResultLoadingComponent } from './result-loading/result-loading.componen
     BrowserModule,
     FormsModule
   ],
-  providers: [],
+  providers: [FirstnamesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
