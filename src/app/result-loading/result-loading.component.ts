@@ -7,8 +7,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ResultLoadingComponent implements OnInit {
 
-  searching = false;
-
   constructor() { }
 
   ngOnInit() {
