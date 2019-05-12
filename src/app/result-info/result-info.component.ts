@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ResultInfoComponent implements OnInit {
 
+  resultCount = 10;
+
   constructor() { }
 
   ngOnInit() {

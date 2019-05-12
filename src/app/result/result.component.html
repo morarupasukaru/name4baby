@@ -1,4 +1,6 @@
-<app-result-loading></app-result-loading>
-<app-result-info></app-result-info>
-<app-result-list></app-result-list>
-<app-result-pagination></app-result-pagination>
+<app-result-loading *ngIf="searching"></app-result-loading>
+<div *ngIf="!searching">
+  <app-result-info></app-result-info>
+  <app-result-list></app-result-list>
+  <app-result-pagination></app-result-pagination>
+</div>
