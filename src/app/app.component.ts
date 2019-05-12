@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FirstnamesService } from './firstnames.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'nowname-app';
+
+  firstnamesService: FirstnamesService;
+
+  constructor (firstnamesService: FirstnamesService) {
+    this.firstnamesService = firstnamesService;
+  }
+
+  ngOnInit() {
+    this.firstnamesService.fetchFirstnames();
+  }
 }
