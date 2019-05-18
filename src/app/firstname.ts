@@ -1,13 +1,17 @@
+export enum Gender {
+  male = 'male',
+  female = 'female',
+  mix = 'mix'
+}
+
 export class Firstname {
   name: string;
-
-  // TODO enum Gender (Male, Female, Neutral)
-  gender: string;
+  gender: Gender;
   like: boolean;
 
-  constructor(name: string, gender: string, like: boolean) {
+  constructor(name: string, gender: Gender, like: boolean) {
     this.name = name;
-    this.gender = gender;
+    this.gender = Gender[gender];
     this.like = like;
   }
 }

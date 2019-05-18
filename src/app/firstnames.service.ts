@@ -1,7 +1,6 @@
 import { Injectable, EventEmitter, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Firstname } from './firstname';
-import { DebugRenderer2 } from '@angular/core/src/view/services';
+import { Firstname, Gender } from './firstname';
 
 export class DataLoadedEvent {
   errorMessage: string;
@@ -33,7 +32,7 @@ export class FirstnamesService {
         this.firstnames = consolidatedFirstnames;
         this.onDataLoaded.emit({ok: true, errorMessage: null});
       }, (error) => {
-        console.log('got error:' + JSON.stringify(error));
+        console.log('Got error:' + JSON.stringify(error));
         // TODO i18n
         this.onDataLoaded.emit({ok: false, errorMessage: 'Application initialization failed: Firstnames cannot be loaded.'});
       });
