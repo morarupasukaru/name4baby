@@ -21,6 +21,7 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
     const defaultCriterias = this.firstnamesService.getDefaultCriterias();
+    this.firstname = defaultCriterias.firstname;
     this.female = defaultCriterias.female;
     this.male = defaultCriterias.male;
     this.like = defaultCriterias.like;
