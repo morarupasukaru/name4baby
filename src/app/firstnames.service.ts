@@ -1,6 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Firstname } from './firstname';
+import { DebugRenderer2 } from '@angular/core/src/view/services';
+
+export class DataLoadedEvent {
+  errorMessage: string;
+  ok: boolean;
+}
 
 @Injectable()
 export class FirstnamesService {
@@ -11,6 +17,8 @@ export class FirstnamesService {
 
   firstnamesUrl = 'assets/firstnames_v1.json';
   firstnames: Firstname[];
+
+  @Output() onDataLoaded: EventEmitter<DataLoadedEvent> = new EventEmitter();
 
   constructor(private http: HttpClient) { }
 
@@ -23,11 +31,15 @@ export class FirstnamesService {
         const consolidatedFirstnames = this.mergeFirstnames(loadedFirstnames, savedFirstnames, hasNewVersion);
         this.saveFirstnames(consolidatedFirstnames);
         this.firstnames = consolidatedFirstnames;
+        this.onDataLoaded.emit({ok: true, errorMessage: null});
       }, (error) => {
         console.log('got error:' + JSON.stringify(error));
+        // TODO i18n
+        this.onDataLoaded.emit({ok: false, errorMessage: 'Application initialization failed: Firstnames cannot be loaded.'});
       });
     } else {
       this.firstnames = savedFirstnames;
+      this.onDataLoaded.emit({ok: true, errorMessage: null});
     }
 
     // TODO inform that loading of data is done

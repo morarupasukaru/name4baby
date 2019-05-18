@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FirstnamesService } from './firstnames.service';
+import { FirstnamesService, DataLoadedEvent } from './firstnames.service';
 
 @Component({
   selector: 'app-root',
@@ -9,12 +9,23 @@ import { FirstnamesService } from './firstnames.service';
 export class AppComponent {
 
   firstnamesService: FirstnamesService;
+  loading = true;
+  error = null;
 
   constructor (firstnamesService: FirstnamesService) {
     this.firstnamesService = firstnamesService;
   }
 
   ngOnInit() {
+    this.firstnamesService.onDataLoaded.subscribe(
+      {
+        next: (event: DataLoadedEvent) => {
+          this.loading = false;
+          if (!event.ok) {
+            this.error = event.errorMessage;
+          }
+        }
+    });
     this.firstnamesService.fetchFirstnames();
   }
 }

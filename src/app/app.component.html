@@ -1,8 +1,13 @@
 <main class="mb-4">
   <div class="container">
-    <app-jumbotron></app-jumbotron>
-    <app-search></app-search>
-    <app-result></app-result>
+    <app-jumbotron [loading]="loading"></app-jumbotron>
+    <div class="alert alert-danger" role="alert" *ngIf="error">
+        {{ error }}
+      </div>
+    <div *ngIf="!loading && !error">
+      <app-search></app-search>
+      <app-result></app-result>
+    </div>
   </div>
 </main>
 <app-footer></app-footer>

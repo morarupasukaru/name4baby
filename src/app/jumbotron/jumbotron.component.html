@@ -1,5 +1,14 @@
 <!-- TODO disappear after several seconds -->
 <div class="jumbotron hidden-xs">
-  <h1 class="display-4 display-xs-2">nowname</h1>
-  <p class="lead">An application to help you choose a firstname for your baby.</p>
+  <h1 class="display-4 display-xs-2 hidden-xs">nowname</h1>
+  <p class="lead  hidden-xs">An application to help you choose a firstname for your baby.</p>
+  <div *ngIf="loading">
+    <hr class="my-4 hidden-xs">
+    <p class="d-flex justify-content-center">Loading...</p>
+    <div class="d-flex justify-content-center">
+      <div class="spinner-border spinner" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  </div>
 </div>
