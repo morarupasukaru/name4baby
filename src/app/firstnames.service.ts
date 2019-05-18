@@ -16,17 +16,18 @@ export class FirstnamesService {
 
   fetchFirstnames() {
     const savedFirstnames = this.getFirstnamesFromLocalStorage();
-    const firstnamesUrlInLocalStorage = localStorage.getItem(this.localStorageUrlKey);
-    const hasNewVersion = this.firstnamesUrl !== firstnamesUrlInLocalStorage;
+    const hasNewVersion = this.firstnamesUrl !== localStorage.getItem(this.localStorageUrlKey);
     if (!savedFirstnames || hasNewVersion) {
       const promise = this.loadFirstnamesFromNetwork(this.firstnamesUrl);
       promise.then((loadedFirstnames: Firstname[]) => {
-        const consolidatedFirstname = this.mergeFirstnames(loadedFirstnames, savedFirstnames, hasNewVersion);
-        this.saveFirstnames(consolidatedFirstname, this.firstnamesUrl);
-
+        const consolidatedFirstnames = this.mergeFirstnames(loadedFirstnames, savedFirstnames, hasNewVersion);
+        this.saveFirstnames(consolidatedFirstnames);
+        this.firstnames = consolidatedFirstnames;
       }, (error) => {
         console.log('got error:' + JSON.stringify(error));
       });
+    } else {
+      this.firstnames = savedFirstnames;
     }
 
     // TODO inform that loading of data is done
@@ -85,8 +86,21 @@ export class FirstnamesService {
     return result;
   }
 
-  saveFirstnames(firstnames: Firstname[], url: string) {
-    localStorage.setItem(this.localStorageUrlKey, url);
+  updateLike(updatedFirstname) {  // TODO Firstname class
+    const index = this.firstnames.findIndex((firstname) =>
+      firstname.name === updatedFirstname.name &&
+      firstname.gender === updatedFirstname.gender);
+    if (index === -1) {
+      this.firstnames.push(updatedFirstname);
+    } else {
+      this.firstnames[index].like = updatedFirstname.like;
+    }
+    this.firstnames.sort((n1, n2) => n1.name.localeCompare(n2.name));
+    this.saveFirstnames(this.firstnames);
+  }
+
+  saveFirstnames(firstnames: Firstname[]) {
+    localStorage.setItem(this.localStorageUrlKey, localStorage.getItem(this.localStorageUrlKey));
     // TODO if no more space available, save only 'like' firstname, in that case remove key this.localStorageUrlKey
     localStorage.setItem(this.localStorageFirstnamesKey, JSON.stringify(firstnames));
   }
@@ -109,5 +123,6 @@ export class FirstnamesService {
 
   search(criterias) {
     localStorage.setItem(this.localStorageDefaultCriteriasKey, JSON.stringify(criterias));
+    // TODO implements search
   }
 }
