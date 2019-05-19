@@ -1,10 +1,15 @@
 import { Injectable, EventEmitter, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Firstname, Gender } from './firstname';
+import { DebugRenderer2 } from '@angular/core/src/view/services';
 
 export class DataLoadedEvent {
   errorMessage: string;
   ok: boolean;
+}
+
+export class SearchResultEvent {
+  foundFirstnames: Firstname[];
 }
 
 @Injectable()
@@ -18,8 +23,13 @@ export class FirstnamesService {
   firstnames: Firstname[];
 
   @Output() onDataLoaded: EventEmitter<DataLoadedEvent> = new EventEmitter();
+  @Output() onSearchStarted: EventEmitter<void> = new EventEmitter();
+  @Output() onSearchEnd: EventEmitter<SearchResultEvent> = new EventEmitter();
 
-  constructor(private http: HttpClient) { }
+  searching = false;
+
+  constructor(private http: HttpClient) {
+   }
 
   fetchFirstnames() {
     const savedFirstnames = this.getFirstnamesFromLocalStorage();
@@ -38,10 +48,13 @@ export class FirstnamesService {
       });
     } else {
       this.firstnames = savedFirstnames;
+      this.firstnames.sort((n1, n2) => n1.name.localeCompare(n2.name));
       this.onDataLoaded.emit({ok: true, errorMessage: null});
     }
+  }
 
-    // TODO inform that loading of data is done
+  isInitialized() {
+    return !!this.firstnames;
   }
 
   loadFirstnamesFromNetwork(url: string) {
@@ -57,7 +70,6 @@ export class FirstnamesService {
           },
           // error
           (error) => {
-            // TODO display error message
             reject(error);
           });
     });
@@ -106,12 +118,11 @@ export class FirstnamesService {
     } else {
       this.firstnames[index].like = updatedFirstname.like;
     }
-    this.firstnames.sort((n1, n2) => n1.name.localeCompare(n2.name));
     this.saveFirstnames(this.firstnames);
   }
 
   saveFirstnames(firstnames: Firstname[]) {
-    localStorage.setItem(this.localStorageUrlKey, localStorage.getItem(this.localStorageUrlKey));
+    localStorage.setItem(this.localStorageUrlKey, this.firstnamesUrl);
     // TODO if no more space available, save only 'like' firstname, in that case remove key this.localStorageUrlKey
     localStorage.setItem(this.localStorageFirstnamesKey, JSON.stringify(firstnames));
   }
@@ -133,7 +144,20 @@ export class FirstnamesService {
   }
 
   search(criterias) {
+    this.searching = true;
+    this.onSearchStarted.emit();
     localStorage.setItem(this.localStorageDefaultCriteriasKey, JSON.stringify(criterias));
+    setTimeout(() => this.emitSearchEnd([]), 1000);
+
     // TODO implements search
+  }
+
+  emitSearchEnd(foundFirstnames: Firstname[]) {
+    this.onSearchEnd.emit({foundFirstnames: foundFirstnames});
+    this.searching = false;
+  }
+
+  isSearching() {
+    return this.searching;
   }
 }

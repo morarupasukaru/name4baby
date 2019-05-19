@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FirstnamesService } from '../firstnames.service';
+import { FirstnamesService, DataLoadedEvent } from '../firstnames.service';
 
 @Component({
   selector: 'app-search',
@@ -25,14 +25,50 @@ export class SearchComponent implements OnInit {
     this.female = defaultCriterias.female;
     this.male = defaultCriterias.male;
     this.like = defaultCriterias.like;
+
+    const criteria = {
+      firstname: this.firstname,
+      female: this.female,
+      male: this.male,
+      like: this.like
+    };
+
+    if (this.firstnamesService.isInitialized()) {
+      this.search(criteria);
+    } else {
+      this.firstnamesService.onDataLoaded.subscribe({
+          next: (event: DataLoadedEvent) => {
+            if (!!event.ok) {
+              this.search(criteria);
+            }
+          }
+      });
+    }
+
+    this.firstnamesService.onSearchStarted.subscribe({
+      next: () => {
+        this.workInProgress = true;
+      }
+    });
+    this.firstnamesService.onSearchEnd.subscribe({
+      next: () => {
+        this.workInProgress = false;
+      }
+    });
+    this.workInProgress = this.firstnamesService.isSearching();
   }
 
   onSubmit(submittedForm) {
-    this.firstnamesService.search({
+    this.search({
       firstname: submittedForm.value.firstname,
       female: submittedForm.value.female,
       male: submittedForm.value.male,
-      like: submittedForm.value.like,
+      like: submittedForm.value.like
     });
+  }
+
+  search(criteria) {
+    this.workInProgress = true;
+    this.firstnamesService.search(criteria);
   }
 }
