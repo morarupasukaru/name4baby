@@ -14,8 +14,6 @@ export class ResultComponent implements OnInit {
   paginationService: PaginationService;
 
   searching = false;
-  firstnames: Firstname[];
-  displayedFirstnames: Firstname[];
   resultCount = 0;
 
   constructor(firstnamesService: FirstnamesService, paginationService: PaginationService) {
@@ -31,15 +29,8 @@ export class ResultComponent implements OnInit {
     });
     this.firstnamesService.searchFinished.subscribe({
       next: (event: SearchResultEvent) => {
-        this.firstnames = event.foundFirstnames;
-        this.resultCount = this.firstnames.length;
+        this.resultCount = event.foundFirstnames.length;
         this.searching = false;
-//        this.displayedFirstnames = this.paginationService.getPage(0, this.firstnames);
-      }
-    });
-    this.paginationService.pageChanged.subscribe({
-      next: (event: PageChangedEvent) => {
-        this.displayedFirstnames = this.paginationService.getPage(event.selectedPage, this.firstnames);
       }
     });
     this.searching = this.firstnamesService.isSearching();

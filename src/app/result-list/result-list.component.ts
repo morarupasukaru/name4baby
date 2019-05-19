@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FirstnamesService } from '../firstnames.service';
+import { FirstnamesService, SearchResultEvent } from '../firstnames.service';
+import { PaginationService, PageChangedEvent } from '../pagination.service';
+import { Firstname, Gender } from '../firstname';
 
 @Component({
   selector: 'app-result-list',
@@ -8,19 +10,50 @@ import { FirstnamesService } from '../firstnames.service';
 })
 export class ResultListComponent implements OnInit {
 
-  service: FirstnamesService;
+  firstnamesService: FirstnamesService;
+  paginationService: PaginationService;
 
-  @Input() firstnames;
+  firstnames: Firstname[];
+  displayedFirstnames: Firstname[];
+  selectedPage: number;
 
-  constructor(service: FirstnamesService) {
-    this.service = service;
+  constructor(firstnamesService: FirstnamesService, paginationService: PaginationService) {
+    this.firstnamesService = firstnamesService;
+    this.paginationService = paginationService;
   }
 
   ngOnInit() {
+    this.firstnamesService.searchStarted.subscribe({
+      next: () => {
+        this.firstnames = [];
+      }
+    });
+    this.firstnamesService.searchFinished.subscribe({
+      next: (event: SearchResultEvent) => {
+        this.firstnames = event.foundFirstnames;
+        this.updateResult();
+      }
+    });
+
+    this.paginationService.pageChanged.subscribe({
+      next: (event: PageChangedEvent) => {
+        this.selectedPage = event.selectedPage;
+        this.updateResult();
+      }
+    });
+  }
+
+  updateResult() {
+    if (!!this.firstnames && !!this.selectedPage) {
+      this.displayedFirstnames.splice(0, this.displayedFirstnames.length);
+      const pageFirstnames = this.paginationService.getPage(this.selectedPage, this.firstnames);
+      pageFirstnames.forEach((firstname) => this.displayedFirstnames.push(firstname));
+      console.log(this.displayedFirstnames);
+    }
   }
 
   onToggle(firstname) {
     firstname.like = !firstname.like;
-    this.service.updateLike(firstname);
+    this.firstnamesService.updateLike(firstname);
   }
 }
