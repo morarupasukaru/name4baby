@@ -13,6 +13,7 @@ export class ResultComponent implements OnInit {
 
   searching = false;
   firstnames: Firstname[];
+  resultCount = 0;
 
   constructor(firstnamesService: FirstnamesService) {
     this.firstnamesService = firstnamesService;
@@ -27,6 +28,7 @@ export class ResultComponent implements OnInit {
     this.firstnamesService.onSearchEnd.subscribe({
       next: (event: SearchResultEvent) => {
         this.firstnames = event.foundFirstnames;
+        this.resultCount = this.firstnames.length;
         this.searching = false;
       }
     });

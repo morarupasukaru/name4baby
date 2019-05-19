@@ -147,9 +147,26 @@ export class FirstnamesService {
     this.searching = true;
     this.onSearchStarted.emit();
     localStorage.setItem(this.localStorageDefaultCriteriasKey, JSON.stringify(criterias));
-    setTimeout(() => this.emitSearchEnd([]), 1000);
+    // simulate an expensive call (for testing ui effect)
+    const delayInMs = 500;
+    setTimeout(() => this.emitSearchEnd(this.performSearch(criterias)), delayInMs);
+  }
 
-    // TODO implements search
+  performSearch(criterias) {
+    const nameCriteria = criterias.firstname.trim();
+    if ((nameCriteria === '' || nameCriteria === '*') && !!criterias.female  && !!criterias.male  && !criterias.like) {
+      return this.firstnames.slice();
+    } else {
+      return this.firstnames.filter((firstname) => {
+        return firstname.name.startsWith(nameCriteria) &&
+        (!criterias.like || firstname.like) &&
+        (criterias.female || firstname.gender !== 'female') &&
+        (criterias.male || firstname.gender !== 'male') &&
+        (criterias.female || criterias.male || firstname.gender !== 'mix');
+        // TODO accents, wildcards, exact match
+      })
+
+    }
   }
 
   emitSearchEnd(foundFirstnames: Firstname[]) {

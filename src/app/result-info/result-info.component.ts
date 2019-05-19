@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-result-info',
@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ResultInfoComponent implements OnInit {
 
-  resultCount = 10;
+  @Input() resultCount;
 
   constructor() { }
 
