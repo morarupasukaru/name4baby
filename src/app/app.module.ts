@@ -15,6 +15,7 @@ import { FooterLanguagesComponent } from './footer-languages/footer-languages.co
 import { FooterInfoComponent } from './footer-info/footer-info.component';
 import { ResultLoadingComponent } from './result-loading/result-loading.component';
 import { FirstnamesService } from './firstnames.service';
+import { PaginationService } from './pagination.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { FirstnamesService } from './firstnames.service';
     HttpClientModule,
     FormsModule
   ],
-  providers: [FirstnamesService],
+  providers: [FirstnamesService, PaginationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

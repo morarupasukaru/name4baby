@@ -1,6 +1,7 @@
 <app-result-loading *ngIf="searching"></app-result-loading>
 <div *ngIf="!searching">
   <app-result-info [resultCount]="resultCount"></app-result-info>
-  <app-result-list [firstnames]="firstnames"></app-result-list>
-  <app-result-pagination></app-result-pagination>
+  <!-- TODO ExpressionChangedAfterItHasBeenCheckedError -->
+  <app-result-list [firstnames]="displayedFirstnames"></app-result-list>
+  <app-result-pagination [resultCount]="resultCount"></app-result-pagination>
 </div>

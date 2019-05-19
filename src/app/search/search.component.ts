@@ -36,7 +36,7 @@ export class SearchComponent implements OnInit {
     if (this.firstnamesService.isInitialized()) {
       this.search(criteria);
     } else {
-      this.firstnamesService.onDataLoaded.subscribe({
+      this.firstnamesService.dataLoaded.subscribe({
           next: (event: DataLoadedEvent) => {
             if (!!event.ok) {
               this.search(criteria);
@@ -45,12 +45,12 @@ export class SearchComponent implements OnInit {
       });
     }
 
-    this.firstnamesService.onSearchStarted.subscribe({
+    this.firstnamesService.searchStarted.subscribe({
       next: () => {
         this.workInProgress = true;
       }
     });
-    this.firstnamesService.onSearchEnd.subscribe({
+    this.firstnamesService.searchFinished.subscribe({
       next: () => {
         this.workInProgress = false;
       }

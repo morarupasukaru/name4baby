@@ -22,9 +22,9 @@ export class FirstnamesService {
   firstnamesUrl = 'assets/firstnames_v1.json';
   firstnames: Firstname[];
 
-  @Output() onDataLoaded: EventEmitter<DataLoadedEvent> = new EventEmitter();
-  @Output() onSearchStarted: EventEmitter<void> = new EventEmitter();
-  @Output() onSearchEnd: EventEmitter<SearchResultEvent> = new EventEmitter();
+  @Output() dataLoaded: EventEmitter<DataLoadedEvent> = new EventEmitter();
+  @Output() searchStarted: EventEmitter<void> = new EventEmitter();
+  @Output() searchFinished: EventEmitter<SearchResultEvent> = new EventEmitter();
 
   searching = false;
 
@@ -40,16 +40,16 @@ export class FirstnamesService {
         const consolidatedFirstnames = this.mergeFirstnames(loadedFirstnames, savedFirstnames, hasNewVersion);
         this.saveFirstnames(consolidatedFirstnames);
         this.firstnames = consolidatedFirstnames;
-        this.onDataLoaded.emit({ok: true, errorMessage: null});
+        this.dataLoaded.emit({ok: true, errorMessage: null});
       }, (error) => {
         console.log('Got error:' + JSON.stringify(error));
         // TODO i18n
-        this.onDataLoaded.emit({ok: false, errorMessage: 'Application initialization failed: Firstnames cannot be loaded.'});
+        this.dataLoaded.emit({ok: false, errorMessage: 'Application initialization failed: Firstnames cannot be loaded.'});
       });
     } else {
       this.firstnames = savedFirstnames;
       this.firstnames.sort((n1, n2) => n1.name.localeCompare(n2.name));
-      this.onDataLoaded.emit({ok: true, errorMessage: null});
+      this.dataLoaded.emit({ok: true, errorMessage: null});
     }
   }
 
@@ -145,7 +145,7 @@ export class FirstnamesService {
 
   search(criterias) {
     this.searching = true;
-    this.onSearchStarted.emit();
+    this.searchStarted.emit();
     localStorage.setItem(this.localStorageDefaultCriteriasKey, JSON.stringify(criterias));
     // simulate an expensive call (for testing ui effect)
     const delayInMs = 500;
@@ -158,19 +158,32 @@ export class FirstnamesService {
       return this.firstnames.slice();
     } else {
       return this.firstnames.filter((firstname) => {
-        return firstname.name.startsWith(nameCriteria) &&
+        return this.filterName(nameCriteria, firstname.name) &&
         (!criterias.like || firstname.like) &&
         (criterias.female || firstname.gender !== 'female') &&
         (criterias.male || firstname.gender !== 'male') &&
         (criterias.female || criterias.male || firstname.gender !== 'mix');
-        // TODO accents, wildcards, exact match
-      })
+        // TODO accents
+      });
+    }
+  }
 
+  filterName(nameCriteria: string, name: string) {
+    // TODO return a function
+    if (nameCriteria.startsWith('"') && nameCriteria.endsWith('"')) {
+      let nameEqualsStrict = nameCriteria.substring(1);
+      nameEqualsStrict = nameEqualsStrict.substring(0, nameEqualsStrict.length - 1);
+      return nameEqualsStrict === name;
+    } else if (nameCriteria.indexOf("*") === -1) {
+      return name.startsWith(nameCriteria);
+    } else {
+      nameCriteria = nameCriteria.replace(/\*/gi, '.*');
+      return name.match(nameCriteria);
     }
   }
 
   emitSearchEnd(foundFirstnames: Firstname[]) {
-    this.onSearchEnd.emit({foundFirstnames: foundFirstnames});
+    this.searchFinished.emit({foundFirstnames: foundFirstnames});
     this.searching = false;
   }
 

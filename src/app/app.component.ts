@@ -17,7 +17,7 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this.firstnamesService.onDataLoaded.subscribe(
+    this.firstnamesService.dataLoaded.subscribe(
       {
         next: (event: DataLoadedEvent) => {
           this.loading = false;

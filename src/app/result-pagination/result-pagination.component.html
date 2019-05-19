@@ -1,14 +1,14 @@
-<nav aria-label="Page navigation example" class="mt-3">
+<nav aria-label="Pagination" class="mt-3">
   <ul class="pagination justify-content-center">
-    <!-- TODO dynamic display previous, next, disabled -->
-    <li class="page-item disabled">
-      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+    <li class="page-item" *ngIf="displayPrevious">
+      <a class="page-link" (click)="onPrevious()">Previous</a>
     </li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link" href="#">Next</a>
+    <li class="page-item" [ngClass]="{'active': isCurrentPage(page)}" (click)="onSelectedPage(page)" *ngFor="let page of pages"><a class="page-link">{{page}}</a></li>
+    <li class="page-item disabled">
+      <a class="page-link" *ngIf="displayNext" aria-disabled="true">...</a>
+    </li>
+    <li class="page-item" *ngIf="displayNext" (click)="onNext()">
+      <a class="page-link" >Next</a>
     </li>
   </ul>
 </nav>
