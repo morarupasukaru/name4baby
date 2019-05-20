@@ -1,5 +1,5 @@
 # nowname
-An application to help you choose a firstname for your baby
+An application to help choosing a firstname for a baby.
 
 ## Installation
 
