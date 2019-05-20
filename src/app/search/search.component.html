@@ -11,13 +11,13 @@
                         [disabled]="workInProgress"
                         name="firstname"
                         [ngModel]="firstname"
-                        placeholder="Enter firstname"
+                        placeholder="{{ 'search.firstname.placeholder' | translate }}"
                         aria-label="Firstname"
                         aria-describedby="button-addon2">
                       <div class="input-group-append">
                         <button class="btn btn-outline-primary"
                           type="submit" id="button-search"
-                          [disabled]="workInProgress"><i class="fa fa-search"></i>&nbsp;Search</button>
+                          [disabled]="workInProgress"><i class="fa fa-search"></i><span [innerHTML]="'search.search' | translate"></span></button>
                       </div>
                     </div>
               </div>
@@ -26,19 +26,19 @@
                 <div class="col-xs-4">
                     <div class="custom-control custom-switch">
                     <input type="checkbox" class="custom-control-input custom-control-input-female" [disabled]="workInProgress" id="female" name="female" [ngModel]="female">
-                    <label class="custom-control-label" for="female"><i class="fa fa-female"></i>&nbsp;Female</label>
+                    <label class="custom-control-label" for="female"><i class="fa fa-female"></i><span [innerHTML]="'search.female' | translate"></span></label>
                   </div>
                 </div>
                 <div class="col-xs-4">
                     <div class="custom-control custom-switch">
                     <input type="checkbox" class="custom-control-input custom-control-input-male" [disabled]="workInProgress" id="male" name="male" [ngModel]="male">
-                    <label class="custom-control-label" for="male"><i class="fa fa-male"></i>&nbsp;Male</label>
+                    <label class="custom-control-label" for="male"><i class="fa fa-male"></i><span [innerHTML]="'search.male' | translate"></span></label>
                   </div>
                 </div>
                 <div class="col-xs-4">
                     <div class="custom-control custom-switch">
                     <input type="checkbox" class="custom-control-input" [disabled]="workInProgress" id="like" name="like" [ngModel]="like">
-                    <label class="custom-control-label" for="like"><i class="fa fa-star"></i>&nbsp;Star</label>
+                    <label class="custom-control-label" for="like"><i class="fa fa-star"></i><span [innerHTML]="'search.star' | translate"></span></label>
                   </div>
                 </div>
             </div>
