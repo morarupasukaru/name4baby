@@ -64,7 +64,7 @@ export class FirstnamesService {
           // success
           (data: any) => {
             const firstnamesFromNetwork = data.map((firstname) => {
-              return new Firstname(firstname.name, firstname.gender, false);
+              return new Firstname(firstname.name, firstname.gender, false, this.normalize(firstname.name));
             });
             resolve(firstnamesFromNetwork);
           },
@@ -81,10 +81,17 @@ export class FirstnamesService {
     let firstnamesFromLocalStorage = [];
     if (!!firstnamesJson) {
       firstnamesFromLocalStorage = JSON.parse(firstnamesJson).map((firstname) => {
-        return new Firstname(firstname.name, firstname.gender, firstname.like);
+        return new Firstname(firstname.name, firstname.gender, firstname.like, this.normalize(firstname.name));
       });
     }
     return firstnamesFromLocalStorage;
+  }
+
+  normalize(s) {
+    if (s.normalize != undefined) {
+        s = s.normalize ('NFKD');
+    }
+    return s.replace (/[\u0300-\u036F]/g, '').toLowerCase();
   }
 
   mergeFirstnames(loadedFirstnames: Firstname[], savedFirstnames: Firstname[], hasNewVersion: boolean) {
@@ -124,7 +131,13 @@ export class FirstnamesService {
   saveFirstnames(firstnames: Firstname[]) {
     localStorage.setItem(this.localStorageUrlKey, this.firstnamesUrl);
     // TODO if no more space available, save only 'like' firstname, in that case remove key this.localStorageUrlKey
-    localStorage.setItem(this.localStorageFirstnamesKey, JSON.stringify(firstnames));
+    let savedFirstnames = [];
+    savedFirstnames.forEach((firstname) => savedFirstnames.push({
+      name: firstname.name,
+      gender: firstname.gender,
+      like: firstname.like
+    }));
+    localStorage.setItem(this.localStorageFirstnamesKey, JSON.stringify(savedFirstnames));
   }
 
   getDefaultCriterias() {
@@ -147,12 +160,10 @@ export class FirstnamesService {
     this.searching = true;
     this.searchStarted.emit();
     localStorage.setItem(this.localStorageDefaultCriteriasKey, JSON.stringify(criterias));
-    this.emitSearchEnd(this.performSearch(criterias));
 
     // simulate an expensive call (for testing ui effect)
-    // TODO not working
-//    const delayInMs = 500;
-//    setTimeout(() => this.emitSearchEnd(this.performSearch(criterias)), delayInMs);
+    const delayInMs = 500;
+    setTimeout(() => this.emitSearchEnd(this.performSearch(criterias)), delayInMs);
   }
 
   performSearch(criterias) {
@@ -161,12 +172,11 @@ export class FirstnamesService {
       return this.firstnames.slice();
     } else {
       return this.firstnames.filter((firstname) => {
-        return this.filterName(nameCriteria, firstname.name) &&
+        return this.filterName(nameCriteria, firstname.search) &&
         (!criterias.like || firstname.like) &&
         (criterias.female || firstname.gender !== 'female') &&
         (criterias.male || firstname.gender !== 'male') &&
         (criterias.female || criterias.male || firstname.gender !== 'mix');
-        // TODO accents / lowercase
       });
     }
   }
@@ -177,11 +187,14 @@ export class FirstnamesService {
       let nameEqualsStrict = nameCriteria.substring(1);
       nameEqualsStrict = nameEqualsStrict.substring(0, nameEqualsStrict.length - 1);
       return nameEqualsStrict === name;
-    } else if (nameCriteria.indexOf('*') === -1) {
-      return name.startsWith(nameCriteria);
     } else {
-      nameCriteria = nameCriteria.replace(/\*/gi, '.*');
-      return name.match(nameCriteria);
+      nameCriteria = this.normalize(nameCriteria);
+      if (nameCriteria.indexOf('*') === -1) {
+        return name.startsWith(nameCriteria);
+      } else {
+        nameCriteria = nameCriteria.replace(/\*/gi, '.*');
+        return name.match(nameCriteria);
+      }
     }
   }
 

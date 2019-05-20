@@ -8,6 +8,7 @@ import { FirstnamesService, DataLoadedEvent } from '../firstnames.service';
 })
 export class SearchComponent implements OnInit, OnDestroy {
 
+  // TODO ExpressionChangedAfterItHasBeenCheckedError
   firstname = '';
   female = false;
   male = false;
