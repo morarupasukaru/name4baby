@@ -15,9 +15,9 @@ export class SearchResultEvent {
 @Injectable()
 export class FirstnamesService {
 
-  localStorageUrlKey = 'firstnamesUrl';
-  localStorageFirstnamesKey = 'firstnames';
-  localStorageDefaultCriteriasKey = 'search-criterias';
+  localStorageUrlKey = 'nowname.firstnamesUrl';
+  localStorageFirstnamesKey = 'nowname.firstnames';
+  localStorageDefaultCriteriasKey = 'nowname.searchcriterias';
 
   firstnamesUrl = 'assets/firstnames_v1.json';
   firstnames: Firstname[];
@@ -197,7 +197,7 @@ export class FirstnamesService {
         return name.startsWith(nameCriteria);
       } else {
         nameCriteria = nameCriteria.replace(/\*/gi, '.*');
-        return name.match('^'+nameCriteria);
+        return name.match('^' + nameCriteria);
       }
     }
   }

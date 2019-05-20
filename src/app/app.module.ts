@@ -57,5 +57,9 @@ export class AppModule { }
 
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
+  if (location.href.indexOf('localhost:4200') === -1) {
+    return new TranslateHttpLoader(http, "/nowname/assets/i18n/", ".json");
+  } else {
+    return new TranslateHttpLoader(http);
+  }
 }

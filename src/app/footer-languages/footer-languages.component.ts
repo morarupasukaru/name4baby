@@ -9,9 +9,10 @@ import { TranslateService } from '@ngx-translate/core';
 export class FooterLanguagesComponent implements OnInit {
 
   current: string;
+  localStorageLangKey = 'nowname.language';
 
   constructor(private translate: TranslateService) {
-    let defaultLanguage = localStorage.getItem('language');
+    let defaultLanguage = localStorage.getItem(this.localStorageLangKey);
     if (!defaultLanguage) {
       defaultLanguage = 'en';
     }
@@ -24,7 +25,7 @@ export class FooterLanguagesComponent implements OnInit {
   useLanguage(language: string) {
     this.current = language;
     this.translate.use(language);
-    localStorage.setItem('language', language);
+    localStorage.setItem(this.localStorageLangKey, language);
   }
 
   isCurrentLanguage(language: string) {
