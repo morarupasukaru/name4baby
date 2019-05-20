@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FirstnamesService, DataLoadedEvent } from '../firstnames.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { FirstnamesService, DataLoadedEvent } from '../firstnames.service';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, OnDestroy {
 
   firstname = '';
   female = false;
@@ -14,6 +14,7 @@ export class SearchComponent implements OnInit {
   like = false;
   workInProgress = false;
   firstnamesService: FirstnamesService;
+  subscriptions = [];
 
   constructor(firstnamesService: FirstnamesService) {
     this.firstnamesService = firstnamesService;
@@ -33,29 +34,36 @@ export class SearchComponent implements OnInit {
       like: this.like
     };
 
+    // TODO avoid this? call search later
     if (this.firstnamesService.isInitialized()) {
       this.search(criteria);
     } else {
-      this.firstnamesService.dataLoaded.subscribe({
+      this.subscriptions.push(this.firstnamesService.dataLoaded.subscribe({
           next: (event: DataLoadedEvent) => {
             if (!!event.ok) {
               this.search(criteria);
             }
           }
-      });
+      }));
     }
 
-    this.firstnamesService.searchStarted.subscribe({
+    this.subscriptions.push(this.firstnamesService.searchStarted.subscribe({
       next: () => {
         this.workInProgress = true;
       }
-    });
-    this.firstnamesService.searchFinished.subscribe({
+    }));
+    this.subscriptions.push(this.firstnamesService.searchFinished.subscribe({
       next: () => {
         this.workInProgress = false;
       }
-    });
+    }));
+
+    // TODO avoid call?
     this.workInProgress = this.firstnamesService.isSearching();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((s) => s.unsubscribe() );
   }
 
   onSubmit(submittedForm) {

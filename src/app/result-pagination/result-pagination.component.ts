@@ -1,7 +1,11 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { PaginationService } from '../pagination.service';
 
 // TODO remove not needed css
+
+export class PageChangedEvent {
+  selectedPage: number;
+}
 
 @Component({
   selector: 'app-result-pagination',
@@ -11,6 +15,7 @@ import { PaginationService } from '../pagination.service';
 export class ResultPaginationComponent implements OnChanges {
 
   @Input() resultCount;
+  @Output() pageChanged = new EventEmitter<PageChangedEvent>();
   paginationService: PaginationService;
   pageCount: number;
   displayPagesCount = 4;
@@ -67,10 +72,14 @@ export class ResultPaginationComponent implements OnChanges {
     }
     this.displayNext = lastPage < this.pageCount;
     this.displayPrevious = firstPage > 1;
-    this.paginationService.selectPage(this.currentPageIndex);
+    this.selectPage(this.currentPageIndex);
   }
 
   isCurrentPage(page) {
     return page === this.currentPageIndex;
+  }
+
+  selectPage(page) {
+    this.pageChanged.emit({ selectedPage: page });
   }
 }

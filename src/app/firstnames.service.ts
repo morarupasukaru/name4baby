@@ -174,7 +174,7 @@ export class FirstnamesService {
       let nameEqualsStrict = nameCriteria.substring(1);
       nameEqualsStrict = nameEqualsStrict.substring(0, nameEqualsStrict.length - 1);
       return nameEqualsStrict === name;
-    } else if (nameCriteria.indexOf("*") === -1) {
+    } else if (nameCriteria.indexOf('*') === -1) {
       return name.startsWith(nameCriteria);
     } else {
       nameCriteria = nameCriteria.replace(/\*/gi, '.*');
@@ -183,7 +183,7 @@ export class FirstnamesService {
   }
 
   emitSearchEnd(foundFirstnames: Firstname[]) {
-    this.searchFinished.emit({foundFirstnames: foundFirstnames});
+    this.searchFinished.emit({foundFirstnames});
     this.searching = false;
   }
 

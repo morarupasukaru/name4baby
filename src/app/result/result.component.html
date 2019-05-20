@@ -1,6 +1,6 @@
 <app-result-loading *ngIf="searching"></app-result-loading>
 <div *ngIf="!searching">
   <app-result-info [resultCount]="resultCount"></app-result-info>
-  <app-result-list></app-result-list>
-  <app-result-pagination [resultCount]="resultCount"></app-result-pagination>
+  <app-result-list [firstnames]="displayedFirstnames"></app-result-list>
+  <app-result-pagination [resultCount]="resultCount" (pageChanged)="onPageChanged($event)"></app-result-pagination>
 </div>

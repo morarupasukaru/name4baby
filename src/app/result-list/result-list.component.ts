@@ -1,55 +1,19 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FirstnamesService, SearchResultEvent } from '../firstnames.service';
-import { PaginationService, PageChangedEvent } from '../pagination.service';
-import { Firstname, Gender } from '../firstname';
+import { Component, Input } from '@angular/core';
+import { FirstnamesService } from '../firstnames.service';
+import { Firstname } from '../firstname';
 
 @Component({
   selector: 'app-result-list',
   templateUrl: './result-list.component.html',
   styleUrls: ['./result-list.component.css']
 })
-export class ResultListComponent implements OnInit {
+export class ResultListComponent {
 
   firstnamesService: FirstnamesService;
-  paginationService: PaginationService;
+  @Input() firstnames: Firstname[];
 
-  firstnames: Firstname[];
-  displayedFirstnames: Firstname[];
-  selectedPage: number;
-
-  constructor(firstnamesService: FirstnamesService, paginationService: PaginationService) {
+  constructor(firstnamesService: FirstnamesService) {
     this.firstnamesService = firstnamesService;
-    this.paginationService = paginationService;
-  }
-
-  ngOnInit() {
-    this.firstnamesService.searchStarted.subscribe({
-      next: () => {
-        this.firstnames = [];
-      }
-    });
-    this.firstnamesService.searchFinished.subscribe({
-      next: (event: SearchResultEvent) => {
-        this.firstnames = event.foundFirstnames;
-        this.updateResult();
-      }
-    });
-
-    this.paginationService.pageChanged.subscribe({
-      next: (event: PageChangedEvent) => {
-        this.selectedPage = event.selectedPage;
-        this.updateResult();
-      }
-    });
-  }
-
-  updateResult() {
-    if (!!this.firstnames && !!this.selectedPage) {
-      this.displayedFirstnames.splice(0, this.displayedFirstnames.length);
-      const pageFirstnames = this.paginationService.getPage(this.selectedPage, this.firstnames);
-      pageFirstnames.forEach((firstname) => this.displayedFirstnames.push(firstname));
-      console.log(this.displayedFirstnames);
-    }
   }
 
   onToggle(firstname) {

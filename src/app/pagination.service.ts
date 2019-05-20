@@ -1,21 +1,12 @@
-import { Injectable, EventEmitter, Output } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Firstname } from './firstname';
-
-export class PageChangedEvent {
-  selectedPage: number;
-}
 
 @Injectable()
 export class PaginationService {
 
   pageSize = 10;
-  @Output() pageChanged: EventEmitter<PageChangedEvent> = new EventEmitter();
 
   constructor() { }
-
-  selectPage(page) {
-    this.pageChanged.emit({ selectedPage: page });
-  }
 
   getPage(pageNumber: number, firstnames: Firstname[]): Firstname[] {
     const start = pageNumber * 10;
@@ -28,5 +19,9 @@ export class PaginationService {
 
   getPageCount(resultCount: number): number {
     return Math.floor(resultCount / this.pageSize) + (resultCount % this.pageSize !== 0 ? 1 : 0);
+  }
+
+  isPaginationDisplayed(resultCount: number): boolean {
+    return resultCount > this.pageSize;
   }
 }
