@@ -20,6 +20,7 @@ export class ResultComponent implements OnInit, OnDestroy {
   displayedFirstnames: Firstname[];
   displayPagination = false;
   subscriptions = [];
+  selectedPage = 0;
 
   constructor(firstnamesService: FirstnamesService, paginationService: PaginationService) {
     this.firstnamesService = firstnamesService;
@@ -36,9 +37,10 @@ export class ResultComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.firstnamesService.searchFinished.subscribe({
       next: (event: SearchResultEvent) => {
         this.foundFirstnames = event.foundFirstnames;
-        this.displayedFirstnames = this.paginationService.getPage(0, this.foundFirstnames);
-        this.resultCount = event.foundFirstnames.length;
+        debugger;
+        this.displayPage(0);
         this.displayPagination = this.paginationService.isPaginationDisplayed(this.resultCount);
+        this.resultCount = event.foundFirstnames.length;
         this.searching = false;
       }
     }));
@@ -47,12 +49,22 @@ export class ResultComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach((s) => s.unsubscribe() );
+    this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
   onPageChanged(pageChanged: PageChangedEvent) {
-    if (!!this.foundFirstnames) {
-      this.displayedFirstnames = this.paginationService.getPage(pageChanged.selectedPage, this.foundFirstnames);
-    }
+    this.displayPage(pageChanged.selectedPage);
+  }
+
+  displayPage(selectedPage) {
+    if (!!this.selectedPage && this.selectedPage !== selectedPage) {
+      debugger;
+      setTimeout(() => {
+        if (!!this.foundFirstnames) {
+          this.displayedFirstnames = this.paginationService.getPage(selectedPage, this.foundFirstnames);
+        }
+      });
+      this.selectedPage = selectedPage;
+      }
   }
 }

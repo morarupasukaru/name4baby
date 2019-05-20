@@ -132,7 +132,7 @@ export class FirstnamesService {
     localStorage.setItem(this.localStorageUrlKey, this.firstnamesUrl);
     // TODO if no more space available, save only 'like' firstname, in that case remove key this.localStorageUrlKey
     let savedFirstnames = [];
-    savedFirstnames.forEach((firstname) => savedFirstnames.push({
+    firstnames.forEach((firstname) => savedFirstnames.push({
       name: firstname.name,
       gender: firstname.gender,
       like: firstname.like
@@ -167,11 +167,12 @@ export class FirstnamesService {
   }
 
   performSearch(criterias) {
+    let result;
     const nameCriteria = criterias.firstname.trim();
     if ((nameCriteria === '' || nameCriteria === '*') && !!criterias.female  && !!criterias.male  && !criterias.like) {
-      return this.firstnames.slice();
+      result = this.firstnames.slice();
     } else {
-      return this.firstnames.filter((firstname) => {
+      result = this.firstnames.filter((firstname) => {
         return this.filterName(nameCriteria, firstname.search) &&
         (!criterias.like || firstname.like) &&
         (criterias.female || firstname.gender !== 'female') &&
@@ -179,6 +180,8 @@ export class FirstnamesService {
         (criterias.female || criterias.male || firstname.gender !== 'mix');
       });
     }
+    debugger;
+    return result;
   }
 
   filterName(nameCriteria: string, name: string) {
