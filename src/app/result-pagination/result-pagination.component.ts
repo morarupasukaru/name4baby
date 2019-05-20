@@ -18,11 +18,10 @@ export class ResultPaginationComponent implements OnChanges {
   pageCount: number;
   displayPagesCount = 3;
   pages = [];
-  displayNext = false;
-  displayPrevious = false;
-  displayThreePoints = false;
   previousDisabled: boolean;
   nextDisabled: boolean;
+  firstDisabled: boolean;
+  lastDisabled: boolean;
 
   constructor(private paginationService: PaginationService) {
   }
@@ -53,6 +52,16 @@ export class ResultPaginationComponent implements OnChanges {
     this.computePages();
   }
 
+  onFirst() {
+    this.currentPageIndex = 1;
+    this.computePages();
+  }
+
+  onLast() {
+    this.currentPageIndex = this.pageCount;
+    this.computePages();
+  }
+
   onSelectedPage(page: number) {
     this.currentPageIndex = page;
     this.computePages();
@@ -72,11 +81,10 @@ export class ResultPaginationComponent implements OnChanges {
       this.pages.push(i);
     }
 
-    this.displayNext = this.pageCount > this.displayPagesCount;
     this.previousDisabled = this.currentPageIndex === 1;
-    this.displayPrevious = this.pageCount > this.displayPagesCount;
     this.nextDisabled = this.currentPageIndex === this.pageCount;
-    this.displayThreePoints = lastPage < this.pageCount;
+    this.firstDisabled = this.previousDisabled;
+    this.lastDisabled = this.nextDisabled;
     this.selectPage(this.currentPageIndex);
   }
 

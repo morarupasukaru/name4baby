@@ -1,2 +1,16 @@
 {
+  "jumbotron.title": "Anwendung die, eine Vorname für eine Baby zu wählen hilft.",
+  "jumbotron.loading": "Laden...",
+  "result-info.countText": "{{ resultCount }} Vornamen gefunden",
+  "result-loading.searching": "Suchen...",
+  "result-pagination.previous": "Vorherige Seite",
+  "result-pagination.next": "Nächste Seite",
+  "result-pagination.first": "Erste Seite",
+  "result-pagination.last": "Letzte Seite",
+  "search.firstname.placeholder": "Vorname eintragen",
+  "search.search": "&nbsp;Suchen",
+  "search.female": "&nbsp;Weiblich",
+  "search.male": "&nbsp;Männlich",
+  "search.star": "&nbsp;Favoriten",
+  "message.cannotLoadFirstnamesJson": "Fehler mit der Initializierung des Anwendung: Vornamen können nicht geladen werden."
 }
