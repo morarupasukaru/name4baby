@@ -1,7 +1,7 @@
 import { Injectable, EventEmitter, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Firstname, Gender } from './firstname';
-import { DebugRenderer2 } from '@angular/core/src/view/services';
+import { TranslateService } from '@ngx-translate/core';
 
 export class DataLoadedEvent {
   errorMessage: string;
@@ -28,7 +28,7 @@ export class FirstnamesService {
 
   searching = false;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private translate: TranslateService) {
    }
 
   fetchFirstnames() {
@@ -43,8 +43,9 @@ export class FirstnamesService {
         this.dataLoaded.emit({ok: true, errorMessage: null});
       }, (error) => {
         console.log('Got error:' + JSON.stringify(error));
-        // TODO i18n
-        this.dataLoaded.emit({ok: false, errorMessage: 'Application initialization failed: Firstnames cannot be loaded.'});
+        this.translate.get('cannotLoadFirstnamesJson').subscribe((res: string) => {
+          this.dataLoaded.emit({ok: false, errorMessage: res});
+        });
       });
     } else {
       this.firstnames = savedFirstnames;
