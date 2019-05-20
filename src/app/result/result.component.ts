@@ -7,7 +7,7 @@ import { PageChangedEvent } from '../result-pagination/result-pagination.compone
 @Component({
   selector: 'app-result',
   templateUrl: './result.component.html',
-  styleUrls: ['./result.component.css']
+  styleUrls: []
 })
 export class ResultComponent implements OnInit, OnDestroy {
 

@@ -116,7 +116,7 @@ export class FirstnamesService {
     return result;
   }
 
-  updateLike(updatedFirstname) {  // TODO Firstname class
+  updateLike(updatedFirstname) {
     const index = this.firstnames.findIndex((firstname) =>
       firstname.name === updatedFirstname.name &&
       firstname.gender === updatedFirstname.gender);

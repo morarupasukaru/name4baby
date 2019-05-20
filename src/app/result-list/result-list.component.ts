@@ -5,7 +5,7 @@ import { Firstname } from '../firstname';
 @Component({
   selector: 'app-result-list',
   templateUrl: './result-list.component.html',
-  styleUrls: ['./result-list.component.css']
+  styleUrls: []
 })
 export class ResultListComponent {
 

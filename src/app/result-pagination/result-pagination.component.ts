@@ -1,8 +1,6 @@
 import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { PaginationService } from '../pagination.service';
 
-// TODO remove not needed css
-
 export class PageChangedEvent {
   selectedPage: number;
 }
