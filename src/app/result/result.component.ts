@@ -51,6 +51,8 @@ export class ResultComponent implements OnInit, OnDestroy {
   }
 
   onPageChanged(pageChanged: PageChangedEvent) {
-    this.displayedFirstnames = this.paginationService.getPage(pageChanged.selectedPage, this.foundFirstnames);
+    if (!!this.foundFirstnames) {
+      this.displayedFirstnames = this.paginationService.getPage(pageChanged.selectedPage, this.foundFirstnames);
+    }
   }
 }

@@ -147,9 +147,12 @@ export class FirstnamesService {
     this.searching = true;
     this.searchStarted.emit();
     localStorage.setItem(this.localStorageDefaultCriteriasKey, JSON.stringify(criterias));
+    this.emitSearchEnd(this.performSearch(criterias));
+
     // simulate an expensive call (for testing ui effect)
-    const delayInMs = 500;
-    setTimeout(() => this.emitSearchEnd(this.performSearch(criterias)), delayInMs);
+    // TODO not working
+//    const delayInMs = 500;
+//    setTimeout(() => this.emitSearchEnd(this.performSearch(criterias)), delayInMs);
   }
 
   performSearch(criterias) {
@@ -163,7 +166,7 @@ export class FirstnamesService {
         (criterias.female || firstname.gender !== 'female') &&
         (criterias.male || firstname.gender !== 'male') &&
         (criterias.female || criterias.male || firstname.gender !== 'mix');
-        // TODO accents
+        // TODO accents / lowercase
       });
     }
   }
