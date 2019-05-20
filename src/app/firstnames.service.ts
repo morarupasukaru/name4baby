@@ -174,7 +174,7 @@ export class FirstnamesService {
       result = this.firstnames.slice();
     } else {
       result = this.firstnames.filter((firstname) => {
-        const isMatchingName = this.filterName(nameCriteria, firstname.search);
+        const isMatchingName = this.filterName(nameCriteria, firstname.search, firstname.name);
         const isMatchingLike = (!criterias.like || firstname.like);
         const isMatchingFemale = (criterias.female || firstname.gender !== 'female');
         const isMatchingMale = (criterias.male || firstname.gender !== 'male');
@@ -185,19 +185,19 @@ export class FirstnamesService {
     return result;
   }
 
-  filterName(nameCriteria: string, name: string) {
+  filterName(nameCriteria: string, normalizedName: string, originalName: string) {
     // TODO return a function
     if (nameCriteria.startsWith('"') && nameCriteria.endsWith('"')) {
       let nameEqualsStrict = nameCriteria.substring(1);
       nameEqualsStrict = nameEqualsStrict.substring(0, nameEqualsStrict.length - 1);
-      return nameEqualsStrict === name;
+      return nameEqualsStrict === originalName;
     } else {
       nameCriteria = this.normalize(nameCriteria);
       if (nameCriteria.indexOf('*') === -1) {
-        return name.startsWith(nameCriteria);
+        return normalizedName.startsWith(nameCriteria);
       } else {
         nameCriteria = nameCriteria.replace(/\*/gi, '.*');
-        return name.match('^' + nameCriteria);
+        return normalizedName.match('^' + nameCriteria);
       }
     }
   }
