@@ -31,8 +31,7 @@ export class ResultComponent implements OnInit, OnDestroy {
     this.selectedPage = null;
     this.foundFirstnames = null;
     this.displayedFirstnames = null;
-    this.displayPagination = null;
-    this.displayPage = null;
+    this.displayPagination = false;
     this.searching = false;
     this.subscriptions = [];
 
@@ -45,10 +44,13 @@ export class ResultComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.firstnamesService.searchFinished.subscribe({
       next: (event: SearchResultEvent) => {
         this.foundFirstnames = event.foundFirstnames;
-        this.displayPage(1);
-        this.displayPagination = this.paginationService.isPaginationDisplayed(this.resultCount);
-        this.resultCount = event.foundFirstnames.length;
-        this.searching = false;
+        this.displayPage(1, true);
+        setTimeout(() => {
+          // TODO problem with displayPagination
+          this.resultCount = event.foundFirstnames.length;
+          this.displayPagination = this.paginationService.isPaginationDisplayed(this.resultCount);
+          this.searching = false;
+        });
       }
     }));
 
@@ -60,11 +62,11 @@ export class ResultComponent implements OnInit, OnDestroy {
   }
 
   onPageChanged(pageChanged: PageChangedEvent) {
-    this.displayPage(pageChanged.selectedPage);
+    this.displayPage(pageChanged.selectedPage, false);
   }
 
-  displayPage(selectedPage) {
-    if (this.selectedPage !== selectedPage) {
+  displayPage(selectedPage, forceReload) {
+    if (forceReload || this.selectedPage !== selectedPage) {
       setTimeout(() => {
         if (!!this.foundFirstnames) {
           this.displayedFirstnames = this.paginationService.getPage(selectedPage, this.foundFirstnames);

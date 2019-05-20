@@ -173,11 +173,12 @@ export class FirstnamesService {
       result = this.firstnames.slice();
     } else {
       result = this.firstnames.filter((firstname) => {
-        return this.filterName(nameCriteria, firstname.search) &&
-        (!criterias.like || firstname.like) &&
-        (criterias.female || firstname.gender !== 'female') &&
-        (criterias.male || firstname.gender !== 'male') &&
-        (criterias.female || criterias.male || firstname.gender !== 'mix');
+        const isMatchingName = this.filterName(nameCriteria, firstname.search);
+        const isMatchingLike = (!criterias.like || firstname.like);
+        const isMatchingFemale = (criterias.female || firstname.gender !== 'female');
+        const isMatchingMale = (criterias.male || firstname.gender !== 'male');
+        const isMatchingMix = (criterias.female || criterias.male || firstname.gender !== 'mix');
+        return isMatchingName && isMatchingLike && isMatchingFemale && isMatchingMale && isMatchingMix;
       });
     }
     return result;

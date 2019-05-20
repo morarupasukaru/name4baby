@@ -15,11 +15,11 @@ export class PageChangedEvent {
 export class ResultPaginationComponent implements OnChanges {
 
   @Input() resultCount;
+  currentPageIndex = 1;
   @Output() pageChanged = new EventEmitter<PageChangedEvent>();
   paginationService: PaginationService;
   pageCount: number;
   displayPagesCount = 4;
-  currentPageIndex = 1;
   pages = [];
   displayNext = false;
   displayPrevious = false;

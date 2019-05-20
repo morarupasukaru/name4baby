@@ -2,5 +2,5 @@
 <div *ngIf="!searching">
   <app-result-info [resultCount]="resultCount"></app-result-info>
   <app-result-list [firstnames]="displayedFirstnames"></app-result-list>
-  <app-result-pagination [resultCount]="resultCount" (pageChanged)="onPageChanged($event)"></app-result-pagination>
+  <app-result-pagination *ngIf="displayPagination" [resultCount]="resultCount" (pageChanged)="onPageChanged($event)"></app-result-pagination>
 </div>
