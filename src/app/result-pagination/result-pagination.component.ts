@@ -17,10 +17,13 @@ export class ResultPaginationComponent implements OnChanges {
   @Output() pageChanged = new EventEmitter<PageChangedEvent>();
   paginationService: PaginationService;
   pageCount: number;
-  displayPagesCount = 4;
+  displayPagesCount = 3;
   pages = [];
   displayNext = false;
   displayPrevious = false;
+  displayThreePoints = false;
+  previousDisabled: boolean;
+  nextDisabled: boolean;
 
   constructor(paginationService: PaginationService) {
     this.paginationService = paginationService;
@@ -58,9 +61,11 @@ export class ResultPaginationComponent implements OnChanges {
   }
 
   computePages() {
-    // TODO center active page
-    const firstPage = this.currentPageIndex;
-    let lastPage = this.currentPageIndex + this.displayPagesCount - 1;
+    let firstPage = this.currentPageIndex - this.displayPagesCount + 1;
+    if (firstPage < 1) {
+      firstPage = 1;
+    }
+    let lastPage = firstPage + this.displayPagesCount - 1;
     if (lastPage > this.pageCount) {
       lastPage = this.pageCount;
     }
@@ -68,8 +73,12 @@ export class ResultPaginationComponent implements OnChanges {
     for (let i = firstPage; i <= lastPage; i++) {
       this.pages.push(i);
     }
-    this.displayNext = lastPage < this.pageCount;
-    this.displayPrevious = firstPage > 1;
+
+    this.displayNext = this.pageCount > this.displayPagesCount;
+    this.previousDisabled = this.currentPageIndex === 1;
+    this.displayPrevious = this.pageCount > this.displayPagesCount;
+    this.nextDisabled = this.currentPageIndex === this.pageCount;
+    this.displayThreePoints = lastPage < this.pageCount;
     this.selectPage(this.currentPageIndex);
   }
 

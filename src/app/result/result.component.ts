@@ -46,7 +46,6 @@ export class ResultComponent implements OnInit, OnDestroy {
         this.foundFirstnames = event.foundFirstnames;
         this.displayPage(1, true);
         setTimeout(() => {
-          // TODO problem with displayPagination
           this.resultCount = event.foundFirstnames.length;
           this.displayPagination = this.paginationService.isPaginationDisplayed(this.resultCount);
           this.searching = false;

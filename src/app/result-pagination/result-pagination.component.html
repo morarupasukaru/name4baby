@@ -1,13 +1,14 @@
 <nav aria-label="Pagination" class="mt-3">
   <ul class="pagination justify-content-center">
-    <li class="page-item" *ngIf="displayPrevious">
+    <li class="page-item" [ngClass]="{'disabled': previousDisabled}" aria-disabled="{ previousDisabled }" *ngIf="displayPrevious">
       <a class="page-link" (click)="onPrevious()" aria-label="Previous" title="Previous"><i class="fa fa-angle-left"></i></a>
     </li>
     <li class="page-item" [ngClass]="{'active': isCurrentPage(page)}" (click)="onSelectedPage(page)" *ngFor="let page of pages"><a class="page-link">{{page}}</a></li>
     <li class="page-item disabled">
-      <a class="page-link" *ngIf="displayNext" aria-disabled="true">...</a>
+      <a class="page-link" *ngIf="displayThreePoints" aria-disabled="true">...</a>
     </li>
-    <li class="page-item" *ngIf="displayNext" (click)="onNext()">
+    <li class="page-item" *ngIf="displayThreePoints" [ngClass]="{'active': isCurrentPage(pageCount)}" (click)="onSelectedPage(pageCount)" ><a class="page-link">{{pageCount}}</a></li>
+    <li class="page-item" [ngClass]="{'disabled': nextDisabled}" aria-disabled="{ nextDisabled }" *ngIf="displayNext" (click)="onNext()">
       <a class="page-link" aria-label="Next" title="Next"><i class="fa fa-angle-right"></i></a>
     </li>
   </ul>

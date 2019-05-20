@@ -8,7 +8,6 @@ import { FirstnamesService, DataLoadedEvent } from '../firstnames.service';
 })
 export class SearchComponent implements OnInit, OnDestroy {
 
-  // TODO ExpressionChangedAfterItHasBeenCheckedError
   firstname = '';
   female = false;
   male = false;
@@ -35,7 +34,6 @@ export class SearchComponent implements OnInit, OnDestroy {
       like: this.like
     };
 
-    // TODO avoid this? call search later
     if (this.firstnamesService.isInitialized()) {
       this.search(criteria);
     } else {
@@ -58,9 +56,6 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.workInProgress = false;
       }
     }));
-
-    // TODO avoid call?
-    this.workInProgress = this.firstnamesService.isSearching();
   }
 
   ngOnDestroy() {
