@@ -180,7 +180,6 @@ export class FirstnamesService {
         (criterias.female || criterias.male || firstname.gender !== 'mix');
       });
     }
-    debugger;
     return result;
   }
 

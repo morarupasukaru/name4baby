@@ -9,6 +9,7 @@ export class PaginationService {
   constructor() { }
 
   getPage(pageNumber: number, firstnames: Firstname[]): Firstname[] {
+    pageNumber = pageNumber - 1;
     const start = pageNumber * 10;
     let end = start + this.pageSize;
     if (end > firstnames.length) {
