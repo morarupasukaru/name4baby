@@ -1,0 +1,16 @@
+{
+  "jumbotron.title": "An application to help choosing a firstname for a baby.",
+  "jumbotron.loading": "Loading...",
+  "result-info.countText": "{{ resultCount }} firstnames found",
+  "result-loading.searching": "Searching...",
+  "result-pagination.previous": "Previous page",
+  "result-pagination.next": "Next page",
+  "result-pagination.first": "First page",
+  "result-pagination.last": "Last page",
+  "search.firstname.placeholder": "Enter firstname",
+  "search.search": "&nbsp;Search",
+  "search.female": "&nbsp;Female",
+  "search.male": "&nbsp;Male",
+  "search.star": "&nbsp;Favorites",
+  "message.cannotLoadFirstnamesJson": "Application initialization failed: Firstnames cannot be loaded."
+}

@@ -1,0 +1,16 @@
+{
+  "jumbotron.title": "Un'applicazione per aiutare a scegliere un nome per un bambino.",
+  "jumbotron.loading": "Caricamento...",
+  "result-info.countText": "{{ resultCount }} nomi trovati",
+  "result-loading.searching": "Scrutatore...",
+  "result-pagination.previous": "Pagina precedente",
+  "result-pagination.next": "Pagina successiva",
+  "result-pagination.first": "Prima pagina",
+  "result-pagination.last": "Ultima pagina",
+  "search.firstname.placeholder": "Inserisci il nome",
+  "search.search": "&nbsp;Scrutatore",
+  "search.female": "&nbsp;Femmina",
+  "search.male": "&nbsp;Maschio",
+  "search.star": "&nbsp;Favorito",
+  "message.cannotLoadFirstnamesJson": "Inizializzazione dell'applicazione non riuscita: impossibile caricare i nomi."
+}
