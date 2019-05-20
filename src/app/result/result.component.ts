@@ -3,6 +3,7 @@ import { FirstnamesService, SearchResultEvent } from '../firstnames.service';
 import { Firstname } from '../firstname';
 import { PaginationService } from '../pagination.service';
 import { PageChangedEvent } from '../result-pagination/result-pagination.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-result',
@@ -11,20 +12,15 @@ import { PageChangedEvent } from '../result-pagination/result-pagination.compone
 })
 export class ResultComponent implements OnInit, OnDestroy {
 
-  firstnamesService: FirstnamesService;
-  paginationService: PaginationService;
-
   searching = false;
   resultCount = 0;
   foundFirstnames: Firstname[];
   displayedFirstnames: Firstname[];
-  displayPagination;
-  subscriptions;
-  selectedPage;
+  displayPagination: boolean;
+  subscriptions: Subscription[];
+  selectedPage: number;
 
-  constructor(firstnamesService: FirstnamesService, paginationService: PaginationService) {
-    this.firstnamesService = firstnamesService;
-    this.paginationService = paginationService;
+  constructor(private firstnamesService: FirstnamesService, private paginationService: PaginationService) {
   }
 
   ngOnInit() {

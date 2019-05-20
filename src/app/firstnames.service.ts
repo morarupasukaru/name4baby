@@ -43,7 +43,7 @@ export class FirstnamesService {
         this.dataLoaded.emit({ok: true, errorMessage: null});
       }, (error) => {
         console.log('Got error:' + JSON.stringify(error));
-        this.translate.get('cannotLoadFirstnamesJson').subscribe((res: string) => {
+        this.translate.get('message.cannotLoadFirstnamesJson').subscribe((res: string) => {
           this.dataLoaded.emit({ok: false, errorMessage: res});
         });
       });
@@ -197,7 +197,7 @@ export class FirstnamesService {
         return name.startsWith(nameCriteria);
       } else {
         nameCriteria = nameCriteria.replace(/\*/gi, '.*');
-        return name.match(nameCriteria);
+        return name.match('^'+nameCriteria);
       }
     }
   }

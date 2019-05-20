@@ -11,7 +11,6 @@ export class FooterLanguagesComponent implements OnInit {
   current: string;
 
   constructor(private translate: TranslateService) {
-    // TODO load default language
     let defaultLanguage = localStorage.getItem('language');
     if (!defaultLanguage) {
       defaultLanguage = 'en';

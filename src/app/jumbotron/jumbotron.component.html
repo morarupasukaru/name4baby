@@ -1,12 +1,12 @@
 <div class="jumbotron hidden-xs">
   <h1 class="display-4 display-xs-2 hidden-xs">nowname</h1>
-  <p class="lead  hidden-xs">{{ 'An application to help you choose a firstname for your baby.' | translate }}</p>
+  <p class="lead  hidden-xs">{{ 'jumbotron.title' | translate }}</p>
   <div *ngIf="loading">
     <hr class="my-4 hidden-xs">
-    <p class="d-flex justify-content-center">Loading...</p>
+    <p class="d-flex justify-content-center">{{ 'jumbotron.loading' | translate }}</p>
     <div class="d-flex justify-content-center">
       <div class="spinner-border spinner" role="status">
-        <span class="sr-only">Loading...</span>
+        <span class="sr-only">{{ 'jumbotron.loading' | translate }}</span>
       </div>
     </div>
   </div>

@@ -13,11 +13,9 @@ export class SearchComponent implements OnInit, OnDestroy {
   male = false;
   like = false;
   workInProgress = false;
-  firstnamesService: FirstnamesService;
   subscriptions = [];
 
-  constructor(firstnamesService: FirstnamesService) {
-    this.firstnamesService = firstnamesService;
+  constructor(private firstnamesService: FirstnamesService) {
   }
 
   ngOnInit() {

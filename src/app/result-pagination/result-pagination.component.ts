@@ -13,9 +13,8 @@ export class PageChangedEvent {
 export class ResultPaginationComponent implements OnChanges {
 
   @Input() resultCount;
-  currentPageIndex = 1;
   @Output() pageChanged = new EventEmitter<PageChangedEvent>();
-  paginationService: PaginationService;
+  currentPageIndex = 1;
   pageCount: number;
   displayPagesCount = 3;
   pages = [];
@@ -25,8 +24,7 @@ export class ResultPaginationComponent implements OnChanges {
   previousDisabled: boolean;
   nextDisabled: boolean;
 
-  constructor(paginationService: PaginationService) {
-    this.paginationService = paginationService;
+  constructor(private paginationService: PaginationService) {
   }
 
   ngOnChanges() {

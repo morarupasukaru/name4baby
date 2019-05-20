@@ -9,14 +9,12 @@ import { Firstname } from '../firstname';
 })
 export class ResultListComponent {
 
-  firstnamesService: FirstnamesService;
   @Input() firstnames: Firstname[];
 
-  constructor(firstnamesService: FirstnamesService) {
-    this.firstnamesService = firstnamesService;
+  constructor(private firstnamesService: FirstnamesService) {
   }
 
-  onToggle(firstname) {
+  onToggle(firstname: Firstname) {
     firstname.like = !firstname.like;
     this.firstnamesService.updateLike(firstname);
   }
