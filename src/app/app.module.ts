@@ -57,7 +57,8 @@ export class AppModule { }
 
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient) {
-  if (location.href.indexOf('localhost:4200') === -1) {
+      // trick to be able to use language translations on installed software on github page
+      if (location.href.indexOf('localhost:4200') === -1) {
     return new TranslateHttpLoader(http, "/nowname/assets/i18n/", ".json");
   } else {
     return new TranslateHttpLoader(http);
