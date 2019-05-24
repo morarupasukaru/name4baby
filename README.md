@@ -9,7 +9,7 @@ ng build --prod --base-href nowname
 
 ## Sources
 
-The list of firstnames comes from [**Federal Statistical Office**](https://www.bfs.admin.ch/bfs/en/home.html)https://www.bfs.admin.ch/bfs/fr/home/statistiques/population/naissances-deces/prenoms-nouveaux-nes.html).
+The [list of firstnames](https://www.bfs.admin.ch/bfs/fr/home/statistiques/population/naissances-deces/prenoms-nouveaux-nes.html) comes from [**Federal Statistical Office**](https://www.bfs.admin.ch/bfs/en/home.html).
 
 
 ## License
