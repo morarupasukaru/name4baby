@@ -11,6 +11,7 @@ ng build --prod --base-href nowname
 
 The [list of firstnames](https://www.bfs.admin.ch/bfs/fr/home/statistiques/population/naissances-deces/prenoms-nouveaux-nes.html) comes from [**Federal Statistical Office**](https://www.bfs.admin.ch/bfs/en/home.html).
 
+The application has been developped after following the Udemy course [Angular Essentials (Angular 2+ with TypeScript)](https://www.udemy.com/angular-essentials-angular-2-angular-4-with-typescript/).
 
 ## License
 
